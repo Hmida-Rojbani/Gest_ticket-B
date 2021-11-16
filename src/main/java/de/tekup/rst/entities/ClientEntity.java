@@ -1,6 +1,7 @@
 package de.tekup.rst.entities;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +34,14 @@ public class ClientEntity {
 	
 	@OneToMany(mappedBy = "client")
 	private List<TicketEntity> tickets = new ArrayList<>();
+	
+	public String getNomComplet() {
+		return prenom + " "+ nom;
+	}
+	
+	public int getAge() {
+		return (int) ChronoUnit.YEARS
+				.between(dateDeNaissance, LocalDate.now());
+	}
 
 }
