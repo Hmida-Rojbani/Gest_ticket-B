@@ -22,7 +22,7 @@ public abstract class MetEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String name;
+	private String nom;
 	
 	private double prix;
 	

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -24,7 +25,7 @@ public class ClientReqDTO {
 	private LocalDate dateDeNaissance;
 	@Email
 	private String courriel;
-	
+	@Pattern(regexp = "^[0-9]{8}$")
 	private String telephone;
 	
 	
