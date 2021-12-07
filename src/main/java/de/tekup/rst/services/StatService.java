@@ -4,7 +4,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +24,7 @@ import de.tekup.rst.entities.Plat;
 import de.tekup.rst.entities.TicketEntity;
 import de.tekup.rst.repositories.ClientRepository;
 import de.tekup.rst.repositories.MetRepository;
+import de.tekup.rst.repositories.TicketRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -29,6 +33,7 @@ public class StatService {
 	
 	private MetRepository metRepository;
 	private ClientRepository clientRepository;
+	private TicketRepository ticketRepository;
 	
 	public MetDTO platPlusAcheter(LocalDate deb, LocalDate fin) {
 		ModelMapper mapper = new ModelMapper();
@@ -90,6 +95,53 @@ public class StatService {
 				.get().getKey();
 		
 		return day.getDisplayName(TextStyle.FULL, new Locale("ar"));
+	}
+	
+	public Map<String, Double> revenue() {
+		List<TicketEntity> tickets = ticketRepository.findAll();
+		LocalDate today = LocalDate.now();
+		
+		double revenueJour=0;
+		
+		for (TicketEntity ticket : tickets) {
+			if(ticket.getDateTime().toLocalDate().isEqual(today)) {
+				revenueJour+=ticket.getAddition();
+			}
+		}
+		
+		/*
+		 * revenueJour=tickets.stream() .filter(ticket ->
+		 * ticket.getDateTime().toLocalDate().isEqual(today)) .mapToDouble(t->
+		 * t.getAddition()) .sum();
+		 */
+		
+		double revenueMois=0;
+		
+		for (TicketEntity ticket : tickets) {
+			if(ticket.getDateTime().getMonthValue()==today.getMonthValue()
+			&& ticket.getDateTime().getYear()==today.getYear()) {
+				revenueMois+=ticket.getAddition();
+			}
+		}
+		
+		double revenueSemaine=0;
+		
+		TemporalField weekYear = WeekFields.ISO.weekOfWeekBasedYear();
+		
+		for (TicketEntity ticket : tickets) {
+			if(ticket.getDateTime().get(weekYear)==today.get(weekYear)
+			&& ticket.getDateTime().getYear()==today.getYear()) {
+				revenueSemaine+=ticket.getAddition();
+			}
+		}
+		
+		Map<String, Double> map = new HashMap<>();
+		
+		map.put("Revenue par Jour", revenueJour);
+		map.put("Revenue par Semaine", revenueSemaine);
+		map.put("Revenue par Mois", revenueMois);
+		
+		return map;
 	}
 
 }
