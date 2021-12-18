@@ -10,4 +10,5 @@ public class ClientResDTO {
 	private String nomComplet;
 	
 	private int age;
+	private String courriel;
 }

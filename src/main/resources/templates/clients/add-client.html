@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="fragments/site-components :: head ">
+
+</head>
+<body>
+	<div th:replace="fragments/site-components :: nav"></div>
+	<div class="container">
+		<h1 class="text-center">Add client</h1>
+
+		<div class="row">
+			<div class="offset-md-3 col-md-6">
+				<form th:object="${client}" method="post" action="/clients/add">
+					<div class="mb-3">
+						<label for="nom" class="form-label">Nom
+							</label> <input th:field="*{nom}" type="text" class="form-control"
+							id="nom">
+							<div class="form-text text-danger" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">We'll never share your 
+						email with anyone else.</div> 
+
+					</div>
+					<div class="mb-3">
+						<label for="prenom" class="form-label">Prenom
+							</label> <input th:field="*{prenom}" type="text" class="form-control"
+							id="prenom">
+						<div class="form-text text-danger" th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}">We'll never share your 
+						email with anyone else.</div> 
+					</div>
+					<div class="mb-3">
+						<label for="date" class="form-label">Date de Naissance
+							</label> <input th:field="*{date}" type="date" class="form-control"
+							id="date">
+							
+							<div class="form-text text-danger" th:if="${#fields.hasErrors('dateDeNaissance')}" th:errors="*{dateDeNaissance}">We'll never share your 
+						email with anyone else.</div> 
+
+					</div>
+					
+					<div class="mb-3">
+						<label for="exampleInputEmail1" class="form-label">Email
+							</label> <input th:field="*{courriel}" type="email" class="form-control"
+							id="exampleInputEmail1" aria-describedby="emailHelp">
+					<div id="emailHelp" class="form-text text-danger" th:if="${#fields.hasErrors('courriel')}" th:errors="*{courriel}">We'll never share your 
+						email with anyone else.</div> 
+		
+					</div>
+					
+					<div class="mb-3">
+						<label for="telephone" class="form-label">Phone
+							</label> <input th:field="*{telephone}" type="text" class="form-control"
+							id="telephone">
+
+					</div>
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div th:replace="fragments/site-components :: jsScript"></div>
+</body>
+</html>

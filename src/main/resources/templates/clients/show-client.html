@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="fragments/site-components :: head ">
+
+</head>
+<body>
+	<div th:replace="fragments/site-components :: nav"></div>
+	<div class="container">
+		<h1 class="text-center">List des client</h1>
+
+		<div class="row">
+			<div class="offset-md-3 col-md-6">
+				<div class="table-responsive">
+  <table class="table table-hover table-primary border-primary">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom & Prénom</th>
+        <th scope="col">Age</th>
+        <th scope="col">E-mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="client : ${listClient}">
+        <th scope="row" th:text="${client.id}">1</th>
+        <td th:text="${client.nomComplet}">Sit</td>
+        <td th:text="${client.age}">Amet</td>
+        <td th:text="${client.courriel}">Consectetur</td>
+      </tr>
+     
+    </tbody>
+
+  </table>
+</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div th:replace="fragments/site-components :: script"></div>
+</body>
+</html>
